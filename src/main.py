@@ -68,7 +68,8 @@ def identity_block(X_input, kernel_size, in_filter, out_filters, stage, block):
             b_conv_fin = bias_variable([f3])
             add_result = tf.nn.relu(add+b_conv_fin)
 
-        return add_result
+#        return add_result
+        return add
 
 
 #这里定义conv_block模块，由于该模块定义时输入和输出尺度不同，故需要进行卷积操作来改变尺度，从而得以相加
@@ -124,7 +125,8 @@ def convolutional_block( X_input, kernel_size, in_filter,
             add_result = tf.nn.relu(add+ b_conv_fin)
 
 
-        return add_result
+#        return add_result
+        return add
 
 
 
