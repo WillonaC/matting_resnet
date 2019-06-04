@@ -128,25 +128,25 @@ def convolutional_block( X_input, kernel_size, in_filter,
 
 
 
-x = tf.reshape(x, [-1,28,28,1])
+x1 = tf.reshape(x, [-1,28,28,1])
 w_conv1 = weight_variable([2, 2, 1, 64])
-x = tf.nn.conv2d(x, w_conv1, strides=[1, 2, 2, 1], padding='SAME')
+x1 = tf.nn.conv2d(x1, w_conv1, strides=[1, 2, 2, 1], padding='SAME')
 b_conv1 = bias_variable([64])
-x = tf.nn.relu(x+b_conv1)
+x1 = tf.nn.relu(x1+b_conv1)
 #这里操作后变成14x14x64
-x = tf.nn.max_pool(x, ksize=[1, 3, 3, 1],
+x1 = tf.nn.max_pool(x1, ksize=[1, 3, 3, 1],
                            strides=[1, 1, 1, 1], padding='SAME')
 
 
 #stage 2
-x = convolutional_block(X_input=x, kernel_size=3, in_filter=64,  out_filters=[64, 64, 256], stage=2, block='a', stride=1)
+x2 = convolutional_block(X_input=x1, kernel_size=3, in_filter=64,  out_filters=[64, 64, 256], stage=2, block='a', stride=1)
 #上述conv_block操作后，尺寸变为14x14x256
-x = identity_block(x, 3, 256, [64, 64, 256], stage=2, block='b' )
-x = identity_block(x, 3, 256, [64, 64, 256], stage=2, block='c')
+x2 = identity_block(x2, 3, 256, [64, 64, 256], stage=2, block='b' )
+x2 = identity_block(x2, 3, 256, [64, 64, 256], stage=2, block='c')
 #上述操作后张量尺寸变成14x14x256
-x = tf.nn.max_pool(x, [1, 2, 2, 1], strides=[1,2,2,1], padding='SAME')
+x2 = tf.nn.max_pool(x2, [1, 2, 2, 1], strides=[1,2,2,1], padding='SAME')
 #变成7x7x256
-flat = tf.reshape(x, [-1,7*7*256])
+flat = tf.reshape(x2, [-1,7*7*256])
 
 w_fc1 = weight_variable([7 * 7 *256, 1024])
 b_fc1 = bias_variable([1024])
