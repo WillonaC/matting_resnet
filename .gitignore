@@ -1,0 +1,5 @@
+logs/
+model/
+*.pyc
+*.tfrecords
+data/
